@@ -1,0 +1,53 @@
+<? $title     = '收银台'; ?>
+<? $bodyClass = 'bg-main'; ?>
+<? include template('_layout/header'); ?>
+
+<? $navTitle = $title; ?>
+<? include template('_inc/nav'); ?>
+
+<div class="nav-bread">
+    <div class="container">
+        <a href="/main"><?=$GLOBALS['SITE_NAME']?></a><span> > </span>
+        <span>收银台</span>
+    </div>
+</div>
+
+<div class="pay">
+    <div class="container">
+        <div class="step-box" style="padding: 0;"></div>
+        <div class="buy">
+            <div class="tit-box bg-light">实付金额：<span>￥<?=$result['total_fee']?></span></div>
+            <div class="tit-black-18">微信支付</div>
+            <div class="wechat-pay">
+                <div class="wechat-pic">
+                    <img src="/payment/makeScanQrCode/?code_url=<?=rawurlencode($result['code_url'])?>"/>
+                </div>
+            </div>
+            <div class="pro_step">
+                <a href="javascript:;" onclick="javascript:history.back(-1);">&laquo; 返回选择其他支付方式</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var orderSn   = '<?=$result['order_sn']?>';
+var returnUrl = '<?=$result['return_url']?>';
+
+$(function () {
+
+    // 每10秒轮询检测是否已在微信端支付完成
+    setInterval(function () {
+        $._getJSON('/payment/isOrderPaid', {'order_sn' : orderSn}, function (resp) {
+            if (resp.msg == 'YES') {
+                SILVER.redirect(returnUrl);
+            }
+        });
+    }, 10000);
+
+});
+
+</script>
+
+<? include template('_layout/footer'); ?>

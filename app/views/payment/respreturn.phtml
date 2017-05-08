@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    if (typeof androidjs != "undefined") {
+        if (androidjs.closeDialogAndRedirect) {
+            androidjs.closeDialogAndRedirect('<?=Model_Payment_Util::encodeResultMsg($result)?>');
+        }
+        else if (androidjs.closeDialog) {
+            androidjs.closeDialog();
+        }
+    }
+    else {
+        location.href = '<?=Model_Payment_Util::buildOfficialSiteUrl($result)?>';
+    }
+</script>

@@ -1,0 +1,14 @@
+{
+    "require": {
+        "qiniu/php-sdk": "^7.0",
+        "jpush/jpush": "^3.2",
+        "aliyuncs/oss-sdk-php": "^2.0",
+        "mongodb/mongodb": "^1.0"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}

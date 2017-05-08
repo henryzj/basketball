@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><?=$title ?: $GLOBALS['SITE_NAME']?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="icon" href="<?=IMG_DIR?>/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?=IMG_DIR?>/favicon.ico" type="image/x-icon" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="description" content="<?=$description ?: $GLOBALS['SITE_NAME']?>" />
+    <script type="text/javascript">
+
+        var IMG_DIR   = '<?=IMG_DIR?>';
+        var SITE_NAME = '<?=$GLOBALS['SITE_NAME']?>';
+        var __USER = {
+            "uid" : '<?=$uid?>'
+        };
+
+    </script>
+
+    <?=MyHelper_Loader::importCss(['weui.min', 'jquery-weui'])?>
+    <?=MyHelper_Loader::importCss($css)?>
+
+    <?=MyHelper_Loader::importJs(['vendor/jquery-2.2.3.min', 'vendor/jquery-weui.min', 'all'])?>
+
+    <? if (Model_Weixin_Util::isWeixinBrowser()): ?>
+
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script>
+            var wxSignPackage = <?=json_encode(Model_Weixin_Core::getJsSignPackage())?>;
+            wxJsApiManager.initConfig(wxSignPackage);
+        </script>
+
+    <? endif; ?>
+
+</head>
+
+<body class="<?=$bodyClass?>">
+
+    <script>
+        // 微信浏览器专用
+        // 等微信JS-SDK加载好了再继续
+        if (isWeixin) {
+            SILVER.toast();
+            wx.ready(function () {
+                SILVER.untoast();
+            });
+        }
+    </script>
+
+    <div id="main_body">
